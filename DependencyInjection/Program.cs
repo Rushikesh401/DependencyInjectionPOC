@@ -7,7 +7,8 @@ class Program
 {
     static void Main(String[] strings)
     { 
-        Service service = new Service();
+        IRepository repository = new Repository();
+        Service service = new Service(repository);
         service.Execute();
     }
 

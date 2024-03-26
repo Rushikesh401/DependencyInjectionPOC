@@ -8,17 +8,10 @@ namespace DependencyInjection
 {
     public class Service
     {
-        private Repository _repository;
-        public Service()
+        private IRepository _repository;
+        public Service(IRepository repository)
         {
-            // tight coupling with the Respository class
-            _repository = new Repository();
-            
-            //when tightly coupled, any changes made directly affect to dependent class. 
-            //Here if any chnages made in Repository 
-            //class will affect implementation of Service class
-
-
+            _repository = repository;
         }
 
         public void Execute()

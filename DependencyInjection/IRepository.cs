@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace DependencyInjection
 {
-    public class Repository : IRepository
+    public interface IRepository
     {
-        public void GetData()
-        {
-            Console.WriteLine("Data retrived");
-        }
+        public void GetData();
     }
 }
