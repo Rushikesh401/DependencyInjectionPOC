@@ -2,22 +2,39 @@
 
 using DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
-
+using Autofac;
 class Program
 
 {
     static void Main(String[] strings)
     {
-        // Setup DI container
-        var serviceProvider = new ServiceCollection()
-            .AddTransient<IRepository, Repository>()
-            .AddTransient<Service>()
-            .BuildServiceProvider();
+
+
+        // Setup Autofac containe
+        var builder = new ContainerBuilder();
+        builder.RegisterType<Repository>().As<IRepository>();   
+        builder.RegisterType<Service>();
+        var container = builder.Build();
 
 
         // Resolve Service from the container
-        var service = serviceProvider.GetRequiredService<Service>();
-        service.Execute();
+        using (var scope = container.BeginLifetimeScope())
+        {
+            var service = scope.Resolve<Service>();
+            service.Execute();
+        }
+
+
+        // Setup DI container
+        //var serviceProvider = new ServiceCollection()
+        //    .AddTransient<IRepository, Repository>()
+        //    .AddTransient<Service>()
+        //    .BuildServiceProvider();
+
+
+        //// Resolve Service from the container
+        //var service = serviceProvider.GetRequiredService<Service>();
+        //service.Execute();
 
 
         /* Using DI container above we eliminated need of  creating and managing 
